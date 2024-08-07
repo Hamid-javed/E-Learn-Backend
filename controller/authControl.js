@@ -8,6 +8,7 @@ const { SECRET_TOKEN } = require("../config/crypto");
 // Controller for user registeration
 exports.register = async (req, res) => {
     const { name, email, password } = req.body;
+    console.log(name, email, password)
     try {
         const hasdedPAss = await bcrypt.hash(password, 10)
         const user = await User.create({ name, email, password: hasdedPAss })
@@ -28,6 +29,7 @@ exports.login = async (req, res) => {
         if (!isMatch) return res.status(401).send("Password is wrong");
 
         let payload = { id: user._id };
+        console.log(payload)
         const token = jwt.sign(payload, SECRET_TOKEN);
         console.log("token is generated", token)
 
@@ -43,4 +45,26 @@ exports.login = async (req, res) => {
         res.status(500).send("Error logging in");
     }
 };
+
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const cookie = req.cookies.token
+        jwt.verify(cookie, SECRET_TOKEN, async (error, decode) => {
+            if (error) {
+                console.log("Error in verify", error)
+            }
+            console.log("The id is", decode.id)
+            const delUser = await User.deleteOne({ _id: decode.id })
+            if (delUser.deletedCount === 0) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.sendStatus(204)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
