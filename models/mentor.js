@@ -11,7 +11,7 @@ const mentorSchema = new mongoose.Schema({
   socialMedia: [
     {
       platform: { type: String, requierd: true },
-      link: { type: String, requierd: true },
+      link: { type: String, required: true },
     },
   ],
 });
