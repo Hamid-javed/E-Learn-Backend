@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const utils = require("../utils/utils");
+const nodemailer = require("nodemailer");
 const { SECRET_TOKEN } = require("../config/crypto");
 
 // Controller for user registeration
@@ -37,6 +39,74 @@ exports.login = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("Error logging in");
+  }
+};
+
+// request otp
+
+exports.requestOtp = async (req, res) => {
+  const email = req.body.email;
+  const user = await User.findOne({ email: email });
+  if (!user) return res.status(400).json({ message: "User Not Found" });
+
+  const otp = utils.generateRandomFourDigitNumber();
+  const otpExpires = Date.now() + 180 * 1000;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.email,
+      pass: process.env.password,
+    },
+  });
+  async function sendOtpEmail(email, otp) {
+    const mailOptions = {
+      from: process.env.email,
+      to: email,
+      subject: "Password Reset OTP",
+      text: `Your OTP for resetting the password is ${otp}`,
+      html: `<b>Your OTP for resetting the password is <strong>${otp}</strong></b>`,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  user.otp.otp = otp;
+  user.otp.expireDate = otpExpires;
+  await user.save();
+  await sendOtpEmail(email, otp);
+  res.status(200).json({ message: "OTP sent to your email" });
+};
+
+// request change otp
+
+exports.resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+  if (!email || !otp || !newPassword) {
+    return res
+      .status(400)
+      .json({ error: "Email, OTP, and new password are required" });
+  }
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (user.otp.otp !== otp || user.expireDate < Date.now()) {
+      return res.status(400).json({ error: "Invalid or expired OTP" });
+    }
+    user.password = newPassword;
+    user.otp = null;
+    user.otpExpires = null;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error resetting password" });
   }
 };
 
