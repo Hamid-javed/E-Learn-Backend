@@ -22,7 +22,8 @@ const courseSchema = new mongoose.Schema({
 });
 
 courseSchema.pre("save", function (next) {
-  this.data.numOfReviews = this.data.reviews.length;
+  const reviewNum = this.data.reviews.length;
+  this.data.numOfReviews = reviewNum;
   next();
 });
 

@@ -111,6 +111,7 @@ exports.resetPassword = async (req, res) => {
 };
 
 //todo make a middleware that verifies and extracts tokens from cookies
+//todo use otp to delete users
 exports.deleteUser = async (req, res) => {
   try {
     const cookie = req.cookies.token;
@@ -127,5 +128,20 @@ exports.deleteUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.logout = (req, res) => {
+  try {
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    res.status(200).send({
+      message: "User successfully logged out",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error logging out");
   }
 };

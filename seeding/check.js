@@ -34,11 +34,12 @@ const mentors = [
 
 const seedMentors = async () => {
   try {
-    await Mentor.deleteMany({});
-    const insertedMentors = await Mentor.insertMany(mentors);
+    const user = await Mentor.findOne({ name: "John Doe" });
+    user.reviews.push("must be good");
+
+    const news = await user.save();
     console.log("Database seeded with mentors");
     mongoose.connection.close();
-    return insertedMentors;
   } catch (error) {
     console.error("Error seeding database:", error);
   }
