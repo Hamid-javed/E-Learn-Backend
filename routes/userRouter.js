@@ -7,10 +7,10 @@ const { verifyUserToken } = require('../middleware/authUser')
 router.post("/register", authControll.register)
 router.post("/login", authControll.login)
 router.post("/signout", authControll.SignOut)
-router.post("/requestOtp", authControll.requestOtp);
-router.post("/resetPassword", authControll.resetPassword);
-// router.get("/test",verifyUserToken, authControll.test)
-router.delete("/delete", authControll.deleteUser)
+router.post("/request-otp", authControll.requestOtp);
+router.post("/reset-password", authControll.resetPassword);
+router.post("/change-password",verifyUserToken, authControll.changePassword)
+router.delete("/delete", verifyUserToken , authControll.deleteUser)
 
 
 

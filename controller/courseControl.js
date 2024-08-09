@@ -1,6 +1,6 @@
 const data = require("../data");
-const Catagory = require("../models/catagoriesScheme");
-const Course = require("../models/courseScheme");
+const Catagory = require("../models/catagoriesSchema");
+const Course = require("../models/courseSchema");
 
 // /search/courses
 //todo fix the mess
@@ -18,27 +18,47 @@ exports.searchApi = async (req, res, next) => {
   res.send(filteredUsers);
 };
 
+// Api for specific data
+exports.shortDetails = async (req, res) => {
+  try {
+    const projection = {
+      'data.title': 1,      
+      'data.category': 1,   
+      'data.rating': 1,     
+      'data.price': 1,  
+      'data.reviews': 1          
+  };
+    const shortData = await Course.find({}, projection)
+    res.status(200).json(shortData)
+  } catch (error) {
+    res.status(404).json({
+      error: error
+    })
+  }
+}
+
+
 // Search by ID pr anyuthing we want!
-exports.searchByID =  async (req, res) => {
+exports.searchByID = async (req, res) => {
   // console.log(12323)
   try {
-      const id = parseInt(req.params.id); // Convert the id parameter to an integer
+    const id = parseInt(req.params.id); // Convert the id parameter to an integer
 
 
-      if (isNaN(id)) {
-          return res.status(400).json({ message: 'Invalid id parameter' });
-      }
-      const course = data.filter((course) => course.id === id); // Query for courses with id greater than the provided value
-      if(course.length < 1) {
-         return res.status(404).json({msg: "CourseID not found"})
-      }
+    if (isNaN(id)) {
+      return res.status(400).json({ message: 'Invalid id parameter' });
+    }
+    const course = data.filter((course) => course.id === id); // Query for courses with id greater than the provided value
+    if (course.length < 1) {
+      return res.status(404).json({ msg: "CourseID not found" })
+    }
 
-     res.json(course)
+    res.json(course)
 
-      
+
   } catch (error) {
-      console.error('Error fetching courses:', error);
-      res.status(500).json({ message: 'Server error' });
+    console.error('Error fetching courses:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

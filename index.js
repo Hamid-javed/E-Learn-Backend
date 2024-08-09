@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config()
 const userRouter = require("./routes/userRouter")
 const courseRouter = require("./routes/courseRouter")
+const dataRouter = require("./routes/dataRouter")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
@@ -16,6 +17,7 @@ app.use(express.json())
 
 app.use("/auth", userRouter)
 app.use("/courses", courseRouter)
+app.use("/data", dataRouter)
 
 
 mongoose.connect(

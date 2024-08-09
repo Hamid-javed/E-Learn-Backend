@@ -16,11 +16,10 @@ const userSchema = new mongoose.Schema({
     },
     user_type_id: {
         type: Number,
-        default: 0, 
-        
+        default: 0,  
     },
     coursesBought: [],
     otp: { otp: { type: Number }, expireDate: { type: Number } },
 });
 
-module.exports = mongoose.model('authUser', userSchema);
+module.exports = mongoose.model('AuthUser', userSchema);
