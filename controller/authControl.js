@@ -46,6 +46,31 @@ exports.login = async (req, res) => {
   }
 };
 
+// TO change user details
+exports.changeDetails = async (req, res) => {
+  try {
+    const userId = req.id;
+    const {name, email, password} = req.body;
+    const user = await User.findOne({_id: userId})
+    if (!user) {
+      return res.status(404).json("User not found!");
+    }
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+      return res.status(400).json("Password does not match!");
+    }
+    user.name = name;
+    user.email = email;
+    const changedUser = await user.save();
+    res.status(200).json("User details changed successfully!")
+  } catch (error) {
+    res.status(500).json({
+      message: error
+    })
+  }
+}
+
+
 // To frequestOpt
 exports.requestOtp = async (req, res) => {
   const email = req.body.email;

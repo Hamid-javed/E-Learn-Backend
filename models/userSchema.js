@@ -19,10 +19,10 @@ const userSchema = new mongoose.Schema({
         default: 0,
     },
     savedCourses: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "Course"},
+        { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
     ],
     boughtCourses: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "Course"},
+        { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
     ],
     noOfSavedCourses: { type: Number },
     noOfBoughtCourses: { type: Number },
@@ -32,12 +32,13 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", function (next) {
     const savedCourses = this.savedCourses.length;
-    const noOfBoughtCourses = this.boughtCourses.length;
+    const numOfBoughtCourses = this.boughtCourses.length;
 
     this.noOfSavedCourses = savedCourses;
-    this.noOfBoughtCourses = noOfBoughtCourses;
+    this.noOfBoughtCourses = numOfBoughtCourses;
+
 
     next();
 });
 
-module.exports = mongoose.model("AuthUSer", userSchema);
+module.exports = mongoose.model("AuthUser", userSchema);
