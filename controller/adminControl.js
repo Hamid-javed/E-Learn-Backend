@@ -224,6 +224,78 @@ exports.delCourse = async (req, res) => {
   };
 
 
+  exports.user = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({ message: "No token, authorization denied" });
+        const decoded = jwt.verify(token, SECRET_TOKEN);
+        const admin = await Admin.findById(decoded.id);
+        if (!admin) return res.status(401).json({ message: "Invalid token" });
+        const users = await User.find()
+        const userData = users.map((user) => {
+            return {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                boughtCourse: user.boughtCourses,
+                savedCourses: user.savedCourses,
+                completed: user.completed,
+                noOfBoughtCourses: user.noOfBoughtCourses,
+                noOfSavedCourses: user.noOfSavedCourses
+            }
+        })
+        res.status(200).json(userData)
+    } catch (error) {
+        res.status(500).json({
+            message: "Server Error"
+        })
+    }
+}
+
+
+// Admin --delete a single User  
+exports.deletUser = async (req, res) => {
+    try {
+        const userId = req.id;
+        const delUser = await User.deleteOne({ _id: userId });
+        if (!delUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json({
+            message: "User deleted successfully!",
+        });
+    } catch (error) {
+        res.status().json({
+            message: "Server Error"
+        });
+    }
+};
+
+
+// Admin --delete a single Review 
+exports.deletReview = async (req, res) => {
+    try {
+        const { courseId, reviewId } = req.params;
+        if (!courseId || !reviewId) {
+            return res.status(400).json({ message: 'Course ID and Review ID are required' });
+        }
+        const course = await Course.findOne({ _id: courseId });
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+        course.data.reviews = course.data.reviews.filter((review) => !review.equals(reviewId))
+        await course.save();
+        res.status(200).json({
+
+            message: "Review Deleted Successfully"
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 
 
 
