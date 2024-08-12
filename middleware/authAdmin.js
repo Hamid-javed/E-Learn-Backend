@@ -2,20 +2,20 @@ const jwt = require('jsonwebtoken');
 const { SECRET_TOKEN } = require("../config/crypto")
 
 
-exports.verifyUserToken = async (req, res, next) => {
+exports.verifyAdminToken = async (req, res, next) => {
 
     try {
         const cookie = req.cookies.token;
         if (!cookie) {
             return res.status(401).json({
-                message: "Unauthorized user!"
+                message: "Unauthorized Admin!"
             });
         }
         jwt.verify(cookie, SECRET_TOKEN, (err, decode) => {
             if (err) {
-              return  res.status(403).json({
-                Message: "Invalid Token"
-              })
+                return res.status(403).json({
+                    Message: "Invalid Token"
+                })
             }
             req.id = decode.id;
             next();

@@ -6,6 +6,7 @@ const userRouter = require("./routes/userRouter")
 const courseRouter = require("./routes/courseRouter")
 const dataRouter = require("./routes/dataRouter")
 const mentorRouter = require("./routes/mertorsRoute")
+const adminRouter = require("./routes/adminRouter")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
@@ -20,6 +21,7 @@ app.use("/auth", userRouter)
 app.use("/courses", courseRouter)
 app.use("/data", dataRouter)
 app.use("/mentors", mentorRouter)
+app.use("/admin", adminRouter)
 
 
 mongoose.connect(
