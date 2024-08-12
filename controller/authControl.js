@@ -9,10 +9,10 @@ const client = new OAuth2Client(process.env.clientId);
 
 // Controller for user registeration
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, number, password } = req.body;
   try {
     const hasdedPAss = await bcrypt.hash(password, 10);
-    await User.create({ name, email, password: hasdedPAss });
+    await User.create({ name, email, number, password: hasdedPAss });
     res.status(201).json({ msg: " user cretaed successfully!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -50,8 +50,8 @@ exports.login = async (req, res) => {
 exports.changeDetails = async (req, res) => {
   try {
     const userId = req.id;
-    const {name, email, password} = req.body;
-    const user = await User.findOne({_id: userId})
+    const { name, email, password } = req.body;
+    const user = await User.findOne({ _id: userId })
     if (!user) {
       return res.status(404).json("User not found!");
     }
@@ -95,7 +95,6 @@ exports.requestOtp = async (req, res) => {
       text: `Your OTP for resetting the password is ${otp}`,
       html: `<b>Your OTP for resetting the password is <strong>${otp}</strong></b>`,
     };
-
     try {
       await transporter.sendMail(mailOptions);
     } catch (error) {
