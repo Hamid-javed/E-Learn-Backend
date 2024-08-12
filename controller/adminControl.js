@@ -134,6 +134,94 @@ exports.deleteMentorCourses = async (req, res) => {
     }
 }
 
+//add a course
+exports.addCourse = async (req, res) => {
+    try {
+      const { category, title, price, img, duration, description } = req.body;
+      const newCourse = new Course({
+        data: {
+          details: {
+            category: category,
+            title: title,
+            price: price,
+            img: img,
+          },
+          duration: duration,
+          description: description,
+        },
+      });
+      const savedCourse = await newCourse.save();
+      res.status(201).json({ msg: "course created" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  };
+
+
+// delete a course
+exports.delCourse = async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const course = await Course.findOne({ _id: courseId });
+      if (!course) return res.status(404).json({ msg: "course not found" });
+      const deCourse = await Course.deleteOne({ _id: courseId });
+      res.status(200).json({ msg: "Course Deleted" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  };
+  
+  //update a course
+  exports.updateCourse = async (req, res) => {
+    try {
+      const { category, title, price, img, duration, description } = req.body;
+      const { courseId } = req.params;
+      const course = await Course.findOne({ _id: courseId });
+      if (!course) return res.status(404).json({ msg: "Course not found" });
+      course.data.details.category = category || course.data.details.category;
+      course.data.details.title = title || course.data.details.title;
+      course.data.details.price = price || course.data.details.price;
+      course.data.details.img = img || course.data.details.img;
+      course.data.duration = duration || course.data.duration;
+      course.data.description = description || course.data.description;
+      const updateCourse = await course.save();
+      res.status(201).json({ msg: "course updated" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  };
+  
+  //add a metntor to a course
+  exports.addMentorToCourse = async (req, res) => {
+    try {
+      const { courseId, mentorId } = req.params;
+      const course = await Course.findOne({ _id: courseId });
+      if (!course) return res.status(404).json({ msg: "Course not found" });
+      const mentor = await Mentor.findOne({ _id: mentorId });
+      if (!mentor) return res.status(404).json({ msg: "mentor not found" });
+      course.data.mentor = mentorId;
+      await course.save();
+      res.status(201).json({ msg: "mentor added" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  };
+  
+  
+  //add a lesson to course
+  exports.addLessonToCourse = async (req, res) => {
+    try {
+      const { lesson } = req.body;
+      const { courseId } = req.params;
+      const course = await Course.findOne({ _id: courseId });
+      if (!course) return res.status(404).json({ msg: "Course not found" });
+      course.data.lessons.push(lesson);
+      await course.save();
+      res.status(201).json({ msg: "lesson added" });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  };
 
 
 
