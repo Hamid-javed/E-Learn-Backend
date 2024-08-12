@@ -11,5 +11,4 @@ router.post("/mentors/:mentorId/add-course/:courseId",verifyAdminToken, adminCon
 router.delete("/mentors/:mentorId/add-course/:courseId",verifyAdminToken, adminControl.deleteMentorCourses)
 
 
-
 module.exports = router;
