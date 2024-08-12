@@ -7,7 +7,4 @@ const { verifyUserToken } = require('../middleware/authUser');
 router.get("/data", verifyUserToken, mentorControl.getMentor)
 
 
-
-
-
 module.exports = router;

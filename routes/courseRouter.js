@@ -4,7 +4,7 @@ const { verifyUserToken } = require('../middleware/authUser');
 
 
 router.get("/courses",verifyUserToken, courseControl.searchApi),
-router.get("/short-details",verifyUserToken, courseControl.shortDetails),
+router.get("/featured",verifyUserToken, courseControl.featured),
 router.get("/searchById/:id",verifyUserToken, courseControl.searchByID),
 router.get("/catagories",verifyUserToken, courseControl.catagories);
 router.get("/search",verifyUserToken, courseControl.search);
@@ -15,6 +15,8 @@ router.delete("/saved", verifyUserToken, courseControl.deleteSaved)
 router.post("/bought-courses", verifyUserToken, courseControl.buyCourse)
 router.get("/bought-courses", verifyUserToken, courseControl.getBoughtCourse)
 router.delete("/bought-courses", verifyUserToken, courseControl.deleteBoughtCourse)
+router.post('/reviews', verifyUserToken, courseControl.addReview)
+router.delete('/reviews', verifyUserToken, courseControl.deleteReview)
 
 
 
