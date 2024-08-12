@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 
 const mentorSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  image: { type: String },
-  about: { type: String },
-  title: {type: String},
+  image: { type: String,required: true },
+  about: { type: String, required: true },
+  title: {type: String, required: true},
   reviews: [
     {
       rating: { type: Number },
       review: { type: String },
+      date: {type: Number, default: Date.now},
       user: { type: mongoose.Schema.Types.ObjectId, ref: "AuthUser" },
     },
   ],
@@ -17,8 +18,8 @@ const mentorSchema = new mongoose.Schema({
   numOfCourses: { type: Number },
   socialMedia: [
     {
-      platform: { type: String, required: true },
-      link: { type: String, required: true },
+      platform: { type: String },
+      link: { type: String },
     },
   ],
 });
