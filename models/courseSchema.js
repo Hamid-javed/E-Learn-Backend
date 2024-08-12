@@ -7,14 +7,13 @@ const courseSchema = new mongoose.Schema({
       category: { type: String, required: true },
       title: { type: String, required: true },
       price: { type: Number, required: true },
-      rating: { type: Number, required: true },
-      numOfReviews: { type: Number, required: true },
+      rating: { type: Number, },
+      numOfReviews: { type: Number },
       img: { type: String, required: true },
     },
     mentor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Mentor",
-      required: true,
     },
     duration: { type: Number, required: true },
     description: { type: String, required: true },
@@ -47,8 +46,9 @@ courseSchema.pre("save", function (next) {
   rating = rating / this.data.reviews.length;
   rating = rating > 5 ? 5 : rating
   rating = rating < 0 ? 0 : rating
+  rating = parseFloat(rating.toFixed(1));
   this.data.details.numOfReviews = reviewNum;
-  this.data.rating = rating;
+  this.data.details.rating = rating || 0;
 
   next();
 });
