@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config()
 const userRouter = require("./routes/userRouter")
 const courseRouter = require("./routes/courseRouter")
-const mentorRouter = require("./routes/mertorsRoute")
+const mentorRouter = require("./routes/mentorsRoute")
 const adminRouter = require("./routes/adminRouter")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');

@@ -4,7 +4,7 @@ const { verifyUserToken } = require("../middleware/authUser");
 
 
 // To get a mentors all data
-router.get("/:mentorId/data",  mentorControl.getMentor);
+router.get("/:mentorId/data",verifyUserToken,  mentorControl.getMentor);
 // To get mentors about
 router.get("/:mentorId/about", verifyUserToken, mentorControl.getMentorAbout);
 // To get all courses of a mentor

@@ -10,7 +10,7 @@ router.post("/signin-google", authControll.googleAuth);
 // To login in a user
 router.post("/login", authControll.login);
 // To change user details 
-router.patch("/change-details", verifyUserToken , authControll.changeDetails)
+router.patch("/change-details", verifyUserToken, authControll.changeDetails)
 // To sign a user out
 router.post("/signout", authControll.SignOut);
 // To request otp for password change
@@ -22,7 +22,7 @@ router.post("/change-password", verifyUserToken, authControll.changePassword);
 // To to delete a user accout
 router.delete("/delete", verifyUserToken, authControll.deleteUser);
 // To get user details
-router.get("/user-details",verifyUserToken, authControll.userData)
+router.get("/user-details", verifyUserToken, authControll.userData)
 
 
 
