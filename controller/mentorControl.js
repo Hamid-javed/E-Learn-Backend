@@ -61,20 +61,20 @@ exports.addMentorReviews = async (req, res) => {
   const newReview = { rating: rating, review: review, user: userId };
   mentor.reviews.push(newReview);
   await mentor.save()
-  res.status(201).json({msg: "review added"});
+  res.status(201).json({ msg: "review added" });
 };
 
 exports.delMentorReviews = async (req, res) => {
-    try {
-      const userId = req.id
-    const {mentorId} = req.params
-    if(!mentorId) return res.status(400).json({msg: "please send course Id"})
+  try {
+    const userId = req.id
+    const { mentorId } = req.params
+    if (!mentorId) return res.status(400).json({ msg: "please send course Id" })
     const mentor = await Mentor.findOne({ _id: mentorId });
     mentor.reviews = mentor.reviews.filter(review => !review.user.equals(userId));
     const x = await mentor.save()
-    res.status(201).json({msg: "review deleted"})
-    } catch (error) {
-      res.status(500).json({msg: error.message})
-  
-    }
+    res.status(201).json({ msg: "review deleted" })
+  } catch (error) {
+    res.status(500).json({ msg: error.message })
+
   }
+}

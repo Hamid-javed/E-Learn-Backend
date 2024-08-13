@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const mentorSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  image: { type: String,required: true },
+  image: { type: String, required: true },
   about: { type: String, required: true },
-  title: {type: String, required: true},
+  title: { type: String, required: true },
   reviews: [
     {
       rating: { type: Number },
       review: { type: String },
-      date: {type: Number, default: Date.now},
+      date: { type: Number, default: Date.now },
       user: { type: mongoose.Schema.Types.ObjectId, ref: "AuthUser" },
     },
   ],

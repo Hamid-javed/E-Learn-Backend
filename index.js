@@ -4,8 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config()
 const userRouter = require("./routes/userRouter")
 const courseRouter = require("./routes/courseRouter")
-const dataRouter = require("./routes/dataRouter")
-const mentorRouter = require("./routes/mertorsRoute")
+const mentorRouter = require("./routes/mentorsRoute")
 const adminRouter = require("./routes/adminRouter")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -19,7 +18,6 @@ app.use(express.json())
 
 app.use("/auth", userRouter)
 app.use("/courses", courseRouter)
-app.use("/data", dataRouter)
 app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)
 
