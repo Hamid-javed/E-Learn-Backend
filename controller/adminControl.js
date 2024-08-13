@@ -51,6 +51,48 @@ exports.addMentor = async (req, res) => {
     }
 }
 
+// To add social media data of Mentor!
+exports.addMentorSocialData = async (req ,res) => {
+    try {
+        const { platform, link } = req.body;
+        const mentorId = req.params;
+        if (!mentorId) {
+            return res.status(404).json({message: "Mentor not found!"})
+        }
+        const getMentor = await Mentor.findOne({_id: mentorId})
+        getMentor.socialMedia.push({platform: platform, link: link})
+        await getMentor.save()
+        res.status(200).json({
+            message: "Added social media platform to mentor!"
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+exports.deleteMentorSocialData = async (req ,res) => {
+    try {
+        const { platform, link } = req.body;
+        const {mentorId, socialId} = req.params;
+        if (!mentorId) {
+            return res.status(404).json({message: "Mentor not found!"})
+        }
+        const getMentor = await Mentor.findOne({_id: mentorId})
+        getMentor.socialMedia= getMentor.socialMedia.filter((media) => {
+            return !media._id.equals(socialId)
+        })
+        await getMentor.save()
+        res.status(200).json({
+            message: "Deletes social media platform of mentor!"
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
 // To update mentor details
 exports.updataMentor = async (req, res) => {
     try {
