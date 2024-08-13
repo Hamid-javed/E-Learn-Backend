@@ -36,11 +36,6 @@ exports.Login = async (req, res) => {
 // Admin -- Get All Users 
 exports.user = async (req, res) => {
     try {
-        const token = req.cookies.token;
-        if (!token) return res.status(401).json({ message: "No token, authorization denied" });
-        const decoded = jwt.verify(token, SECRET_TOKEN);
-        const admin = await Admin.findById(decoded.id);
-        if (!admin) return res.status(401).json({ message: "Invalid token" });
         const users = await User.find()
         const userData = users.map((user) => {
             return {
@@ -57,7 +52,7 @@ exports.user = async (req, res) => {
         res.status(200).json(userData)
     } catch (error) {
         res.status(500).json({
-            message: "Server Error"
+            message: error
         })
     }
 }
