@@ -9,10 +9,10 @@ const client = new OAuth2Client(process.env.clientId);
 
 // Controller for user registeration
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, number, password } = req.body;
   try {
     const hasdedPAss = await bcrypt.hash(password, 10);
-    await User.create({ name, email, password: hasdedPAss });
+    await User.create({ name, email, number, password: hasdedPAss });
     res.status(201).json({ msg: " user cretaed successfully!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -50,8 +50,8 @@ exports.login = async (req, res) => {
 exports.changeDetails = async (req, res) => {
   try {
     const userId = req.id;
-    const {name, email, password} = req.body;
-    const user = await User.findOne({_id: userId})
+    const { name, email, number, password } = req.body;
+    const user = await User.findOne({ _id: userId })
     if (!user) {
       return res.status(404).json("User not found!");
     }
@@ -59,13 +59,14 @@ exports.changeDetails = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json("Password does not match!");
     }
-    user.name = name;
-    user.email = email;
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.number = number || user.number;
     const changedUser = await user.save();
-    res.status(200).json("User details changed successfully!")
+    res.status(200).json({ message: "User details changed successfully!" })
   } catch (error) {
     res.status(500).json({
-      message: error
+      message: error.message
     })
   }
 }
@@ -95,7 +96,6 @@ exports.requestOtp = async (req, res) => {
       text: `Your OTP for resetting the password is ${otp}`,
       html: `<b>Your OTP for resetting the password is <strong>${otp}</strong></b>`,
     };
-
     try {
       await transporter.sendMail(mailOptions);
     } catch (error) {
@@ -121,7 +121,7 @@ exports.resetPassword = async (req, res) => {
       .json({ error: "Email, OTP, and new password are required" });
   }
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     if (!user) return res.status(404).json({ error: "User not found" });
 
     if (user.otp.otp !== otp || user.expireDate < Date.now()) {
@@ -267,3 +267,22 @@ exports.googleAuth = async (req, res) => {
   }
 };
 
+// send user details
+exports.userData = async (req, res) => {
+  try {
+    const userId = req.id;
+    if (!userId) {
+      res.status(406).json({
+        Message: "No data Found for user!",
+      });
+    }
+    const userData = await User.findOne({ _id: userId });
+    // console.log("User data is", userData)
+    res.status(200).json({
+      name: userData.name,
+      email: userData.email
+    })
+  } catch (error) {
+    console.log("The error is", error)
+  }
+};

@@ -13,9 +13,9 @@ exports.verifyUserToken = async (req, res, next) => {
         }
         jwt.verify(cookie, SECRET_TOKEN, (err, decode) => {
             if (err) {
-              return  res.status(403).json({
-                Message: "Invalid Token"
-              })
+                return res.status(403).json({
+                    Message: "Invalid Token"
+                })
             }
             req.id = decode.id;
             next();
