@@ -1,9 +1,9 @@
 const Admin = require("../models/adminSchema");
-const Catagory = require("../models/catagoriesSchema");
 const Course = require("../models/courseSchema");
 const Mentor = require("../models/mentorSchema");
 const User = require("../models/userSchema");
 const bcrypt = require("bcrypt");
+const Video = require("../models/videoSchema")
 const jwt = require("jsonwebtoken");
 const { SECRET_TOKEN } = require("../config/crypto");
 
