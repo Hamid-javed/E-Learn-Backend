@@ -23,7 +23,7 @@ app.use("/admin", adminRouter)
 
 
 mongoose.connect(
-  process.env.local_DB
+  process.env.DB_URL
 )
   .then(() => {
     console.log("Connected To MongoDB"),
