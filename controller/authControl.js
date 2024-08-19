@@ -286,3 +286,9 @@ exports.userData = async (req, res) => {
     console.log("The error is", error)
   }
 };
+
+
+
+exports.check = async (req ,res ) => {
+  res.sendStatus(200)
+}
