@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "npm test",
-    "heroku-postbuild": "npm test"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "echo 'No build steps required'" 
   },
   "keywords": [],
   "author": "",
