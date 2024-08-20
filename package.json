@@ -6,12 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "echo 'No build steps required'" 
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie": "^0.6.0",
@@ -19,10 +21,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "heroku": "^9.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.2",
-    "moongose": "^1.0.0",
     "nodemailer": "^6.9.14",
     "parser": "^0.1.4"
   },
