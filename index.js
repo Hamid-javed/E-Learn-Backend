@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json())
 
 
-app.use("/auth", userRouter)
+app.use("/", userRouter)
 app.use("/courses", courseRouter)
 app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)
