@@ -4,7 +4,7 @@ const { verifyUserToken } = require("../middleware/authUser");
 
 
 // To register a user
-router.post("/", authControll.register);
+router.post("/register", authControll.register);
 // To sign in with google
 router.post("/signin-google", authControll.googleAuth);
 // To login in a user

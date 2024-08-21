@@ -16,10 +16,11 @@ app.use(cors());
 app.use(express.json())
 
 
-app.use("/", userRouter)
+app.use("/auth", userRouter)
 app.use("/courses", courseRouter)
 app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)
+app.get("/", (req, res) => res.send("hello"))
 
 
 mongoose.connect(
