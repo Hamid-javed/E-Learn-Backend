@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
       httpOnly: true,
-      // maxAge: 60 * 60 * 1000
+      maxAge: 60 * 60 * 1000
     });
     res.status(200).send({
       message: "User successfully logged in",
