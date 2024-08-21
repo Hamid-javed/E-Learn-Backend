@@ -11,8 +11,15 @@ const cors = require('cors');
 
 const port = process.env.PORT
 
+
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:5173', // Replace with your frontend's origin
+  credentials: true, // Allow credentials (cookies) to be sent
+};
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
-app.use(cors());
 app.use(express.json())
 
 
@@ -31,8 +38,8 @@ mongoose.connect(
   })
   .catch((err) => {
     console.log(err.stack)
-    
+
   })
-  app.listen(port, () => {
-    console.log("Server running on localhost:" + port);
-  });
+app.listen(port, () => {
+  console.log("Server running on localhost:" + port);
+});
