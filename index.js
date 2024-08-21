@@ -27,9 +27,12 @@ mongoose.connect(
   process.env.DB_URL
 )
   .then(() => {
-    console.log("Connected To MongoDB"),
-      app.listen(port, () => {
-        console.log("Server running on localhost:" + port);
-      });
+    console.log("Connected To MongoDB")
   })
-  .catch((err) => console.log(`unable to connet with dB : ${err.stack} `));
+  .catch((err) => {
+    console.log(err.stack)
+    
+  })
+  app.listen(port, () => {
+    console.log("Server running on localhost:" + port);
+  });
