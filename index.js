@@ -9,7 +9,7 @@ const adminRouter = require("./routes/adminRouter")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const port = process.env.port
+const port = process.env.PORT
 
 app.use(cookieParser());
 app.use(cors());
