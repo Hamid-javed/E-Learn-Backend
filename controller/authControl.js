@@ -12,7 +12,7 @@ exports.register = async (req, res) => {
   try {
     const hasdedPAss = await bcrypt.hash(password, 10);
     await User.create({ name, email, number, password: hasdedPAss });
-    res.status(201).json({ msg: " user cretaed successfully!" });
+    res.status(200).json({ msg: " user cretaed successfully!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -23,14 +23,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).send("Invalid email");
+    if (!user) return res.status(401).json({Message: "Invalid email"});
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json("Password is wrong");
 
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
-    const node_env = process.env.NODE_ENV
     res.cookie("token", token, {
       httpOnly: true,
       path: '/',
