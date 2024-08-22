@@ -10,6 +10,9 @@ const client = new OAuth2Client(process.env.clientId);
 exports.register = async (req, res) => {
   const { name, email, number, password } = req.body;
   try {
+    if (!name || !email || !password) {
+      return res.status(400).json({message: "Name , email and password is required!"})
+    }
     const hasdedPAss = await bcrypt.hash(password, 10);
     await User.create({ name, email, number, password: hasdedPAss });
     res.status(200).json({ msg: " user cretaed successfully!" });
