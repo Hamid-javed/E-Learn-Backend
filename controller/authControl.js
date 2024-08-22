@@ -10,8 +10,14 @@ const client = new OAuth2Client(process.env.clientId);
 exports.register = async (req, res) => {
   const { name, email, number, password } = req.body;
   try {
-    if (!name || !email || !password) {
-      return res.status(400).json({message: "Name , email and password is required!"})
+    if (!name) {
+      return res.status(400).json({ message: "Name is required!" })
+    }
+    if (!email) {
+      return res.status(400).json({ message: "Email is required!" })
+    }
+    if (!password) {
+      return res.status(400).json({ message: "Password is required!" })
     }
     const hasdedPAss = await bcrypt.hash(password, 10);
     await User.create({ name, email, number, password: hasdedPAss });
@@ -29,10 +35,10 @@ exports.login = async (req, res) => {
     if (!user) return res.status(401).json({
       message: "Invalid email",
       user
-      });
+    });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.json({message : "Password is wrong"});
+    if (!isMatch) return res.json({ message: "Password is wrong" });
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
@@ -60,11 +66,11 @@ exports.changeDetails = async (req, res) => {
     const { name, email, number, password } = req.body;
     const user = await User.findOne({ _id: userId })
     if (!user) {
-      return res.status(404).json({message: "User not found!"});
+      return res.status(404).json({ message: "User not found!" });
     }
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
-      return res.status(400).json({message : "Password does not match!"});
+      return res.status(400).json({ message: "Password does not match!" });
     }
     user.name = name || user.name;
     user.email = email || user.email;
@@ -296,6 +302,6 @@ exports.userData = async (req, res) => {
 
 
 
-exports.check = async (req ,res ) => {
-  res.status(200).json({message: "Authorized"})
+exports.check = async (req, res) => {
+  res.status(200).json({ message: "Authorized" })
 }
