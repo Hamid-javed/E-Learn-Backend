@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
-      httpOnly: true,
+      // httpOnly: true,
       path: '/',
       sameSite: 'lax',
       maxAge: 60 * 60 * 1000
