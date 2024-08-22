@@ -23,11 +23,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({Message: "Invalid email"});
+    if (!user) return res.status(401).json({
+      message: "Invalid email",
+      user
+      });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.json({message : "Password is wrong"});
-
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
