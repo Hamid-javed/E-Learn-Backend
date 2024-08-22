@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const { SECRET_TOKEN } = require("../config/crypto");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.clientId);
+
 // Controller for user registeration
 exports.register = async (req, res) => {
   const { name, email, number, password } = req.body;
@@ -169,7 +170,12 @@ exports.SignOut = async (req, res) => {
         return res.status(403).json({ message: "Invalid token" });
       }
       // Clear the token cookie
-      res.clearCookie("token");
+      res.clearCookie("token", {
+        httpOnly: true,
+        path: '/',
+        sameSite: 'None',
+        secure: true
+      });
       return res.status(200).json({ message: "User Sign out successfully" });
     });
   } catch (error) {
