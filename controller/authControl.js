@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
       path: '/',
       // sameSite: 'lax',
       maxAge: 60 * 60 * 1000,
-      secure: true
+      // secure: true
     });
     res.status(200).send({
       message: "User successfully logged in",
@@ -293,5 +293,5 @@ exports.userData = async (req, res) => {
 
 
 exports.check = async (req ,res ) => {
-  res.sendStatus(200)
+  res.status(200).json({message: "Autherized"})
 }
