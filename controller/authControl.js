@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
     if (!user) return res.status(401).json({Message: "Invalid email"});
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json("Password is wrong");
+    if (!isMatch) return res.status(401).json({message : "Password is wrong"});
 
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
@@ -55,11 +55,11 @@ exports.changeDetails = async (req, res) => {
     const { name, email, number, password } = req.body;
     const user = await User.findOne({ _id: userId })
     if (!user) {
-      return res.status(404).json("User not found!");
+      return res.status(404).json({message: "User not found!"});
     }
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
-      return res.status(400).json("Password does not match!");
+      return res.status(400).json({message : "Password does not match!"});
     }
     user.name = name || user.name;
     user.email = email || user.email;

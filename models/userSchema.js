@@ -4,42 +4,56 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Name is required"],
+    trim: true,
+    minlength: [2, "Name must be at least 2 characters long"],
+    maxlength: [50, "Name cannot exceed 50 characters"],
   },
   email: {
     type: String,
     required: [true, "Email is required"],
     unique: true,
+    match: [
+      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+      "Please enter a valid email address",
+    ],
   },
   number: {
     type: Number,
     unique: true,
+    required : false,
+    min: [1000000000, "Number must be at least 10 digits"],
+    max: [9999999999, "Number cannot exceed 10 digits"],
   },
   password: {
     type: String,
     required: [true, "Password is required"],
+    minlength: [6, "Password must be at least 6 characters long"],
   },
   user_type_id: {
     type: Number,
     default: 0,
+    min: [0, "User type ID must be a positive number"],
   },
   savedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
   boughtCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
   completed: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Course.data.lessons" }
+    { type: mongoose.Schema.Types.ObjectId, ref: "Course.data.lessons" },
   ],
-  noOfSavedCourses: { type: Number },
-  noOfBoughtCourses: { type: Number },
+  noOfSavedCourses: { type: Number, default: 0 },
+  noOfBoughtCourses: { type: Number, default: 0 },
 
-  otp: { otp: { type: Number }, expireDate: { type: Number } },
+  otp: {
+    otp: {
+      type: Number,
+    },
+    expireDate: { type: Number },
+  },
 });
 
+// Middleware to set noOfSavedCourses and noOfBoughtCourses before saving
 userSchema.pre("save", function (next) {
-  const savedCourses = this.savedCourses.length;
-  const numOfBoughtCourses = this.boughtCourses.length;
-
-  this.noOfSavedCourses = savedCourses;
-  this.noOfBoughtCourses = numOfBoughtCourses;
-
+  this.noOfSavedCourses = this.savedCourses.length;
+  this.noOfBoughtCourses = this.boughtCourses.length;
   next();
 });
 
