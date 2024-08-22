@@ -293,5 +293,5 @@ exports.userData = async (req, res) => {
 
 
 exports.check = async (req ,res ) => {
-  res.sendStatus(200)
+  res.status(200).json({message: "Authorized"})
 }
