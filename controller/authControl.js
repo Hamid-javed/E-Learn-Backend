@@ -19,6 +19,11 @@ exports.register = async (req, res) => {
     if (!password) {
       return res.status(400).json({ message: "Password is required!" })
     }
+
+    const user = await User.findOne({ email: email })
+    if (user) {
+      return res.status(400).json({ message: "Email is Taken!" })
+    }
     const hasdedPAss = await bcrypt.hash(password, 10);
     await User.create({ name, email, number, password: hasdedPAss });
     res.status(200).json({ msg: " user cretaed successfully!" });
