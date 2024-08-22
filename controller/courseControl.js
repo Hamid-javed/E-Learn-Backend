@@ -17,7 +17,7 @@ exports.featured = async (req, res) => {
     });
     const featuredCourses = await Promise.all(coursePromises);
     const resp = featuredCourses.map((course) => {
-      return { id: course._id, data: course.data.details }
+      return { id: course._id, data: course.data }
     })
     res.status(200).json(resp);
   } catch (error) {
