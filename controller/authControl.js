@@ -6,7 +6,6 @@ const nodemailer = require("nodemailer");
 const { SECRET_TOKEN } = require("../config/crypto");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.clientId);
-
 // Controller for user registeration
 exports.register = async (req, res) => {
   const { name, email, number, password } = req.body;
@@ -31,10 +30,11 @@ exports.login = async (req, res) => {
 
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
+    const node_env = process.env.NODE_ENV
     res.cookie("token", token, {
       httpOnly: true,
       path: '/',
-      // sameSite: 'lax',
+      sameSite: 'None',
       maxAge: 60 * 60 * 1000,
       secure: true
     });

@@ -13,13 +13,12 @@ const port = process.env.PORT
 
 
 // CORS configuration
-// const corsOptions = {
-//   origin: 'http://localhost:5173', // Replace with your frontend's origin
-//   methods: 'GET,POST,DELETE,PUT',
-//   credentials: true, // Allow credentials (cookies) to be sent
-// };
-// app.use(cors(corsOptions));
-app.use(cors());
+const corsOptions = {
+  origin: true, // Replace with your frontend's origin
+  methods: 'GET,POST,DELETE,PUT',
+  credentials: true, // Allow credentials (cookies) to be sent
+};
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json())
