@@ -244,7 +244,7 @@ exports.getSavedCourse = async (req, res) => {
     const coursesToSend = courses.map((course) => {
       return {
         _id: course._id,
-        data: course.data.details,
+        data: course,
       };
     });
     res.status(200).json(coursesToSend);
