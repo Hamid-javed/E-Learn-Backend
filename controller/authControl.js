@@ -85,7 +85,7 @@ exports.changeDetails = async (req, res) => {
     res.status(200).json({ message: "User details changed successfully!" })
   } catch (error) {
     res.status(500).json({
-      message: error.message
+      error: error.message
     })
   }
 }
@@ -119,7 +119,7 @@ exports.requestOtp = async (req, res) => {
       await transporter.sendMail(mailOptions);
     } catch (error) {
       console.error("Error sending OTP:", error);
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ error: error.message });
     }
   }
 
@@ -179,7 +179,7 @@ exports.SignOut = async (req, res) => {
       return res.status(200).json({ message: "User Sign out successfully" });
     });
   } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ error: error.message });
   }
 };
 
@@ -196,7 +196,7 @@ exports.deleteUser = async (req, res) => {
       message: "User deleted successfully!",
     });
   } catch (error) {
-    console.log(error.stack);
+    return res.status(500).json({ error: error.message });
   }
 };
 
@@ -234,7 +234,6 @@ exports.changePassword = async (req, res) => {
   } catch (error) {
     console.log("The error is", error);
     res.status(500).json({
-      message: "An error occurred",
       error: error.message,
     });
   }
@@ -287,7 +286,7 @@ exports.googleAuth = async (req, res) => {
       message: "User successfully logged in",
     });
   } catch (error) {
-    res.status(401).json({ message: error.message });
+    res.status(401).json({ error: error.message });
   }
 };
 
@@ -297,7 +296,7 @@ exports.userData = async (req, res) => {
     const userId = req.id;
     if (!userId) {
       res.status(406).json({
-        Message: "No data Found for user!",
+        message: "No data Found for user!",
       });
     }
     const userData = await User.findOne({ _id: userId });
@@ -307,7 +306,7 @@ exports.userData = async (req, res) => {
       email: userData.email
     })
   } catch (error) {
-    console.log("The error is", error)
+    res.status(401).json({ error: error.message });
   }
 };
 
