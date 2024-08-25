@@ -21,11 +21,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.options('*', cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json())
 
 
-app.use("/auth", cors(corsOptions), userRouter);
+app.use("/auth", userRouter);
 app.use("/courses", courseRouter)
 app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)

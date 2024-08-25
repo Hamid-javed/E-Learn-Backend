@@ -136,33 +136,33 @@ exports.resetPassword = async (req, res) => {
   const { email, otp, newPassword } = req.body;
 
   if (!email) {
-    res.status(400)
-      .json({ message: "Email is required!" });
+    return res.status(400).json({ message: "Email is required!" });
   }
-  if (!opt) {
-    res.status(400)
-      .json({ message: "OPT is required!" });
+  if (!otp) {
+    return res.status(400).json({ message: "OTP is required!" });
   }
   if (!newPassword) {
-    res.status(400)
-      .json({ message: "Password is required!" });
+    return res.status(400).json({ message: "Password is required!" });
   }
+
   try {
     const user = await User.findOne({ email: email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    if (user.otp.otp !== otp || user.expireDate < Date.now()) {
+    if (user.otp !== otp || user.otpExpires < Date.now()) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
-    const hasdNewPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hasdNewPassword;
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
     user.otp = null;
     user.otpExpires = null;
     await user.save();
 
-    res.status(200).json({ message: "Password reset successfully" });
+    return res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Error resetting password" });
+    console.error('Password reset error:', error);
+    return res.status(500).json({ message: "Error resetting password" });
   }
 };
 
