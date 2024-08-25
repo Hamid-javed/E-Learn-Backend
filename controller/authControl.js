@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
     }
     const hasdedPAss = await bcrypt.hash(password, 10);
     await User.create({ name, email, number, password: hasdedPAss });
-    res.status(200).json({ msg: " user cretaed successfully!" });
+    res.status(200).json({ message: " user cretaed successfully!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -117,6 +117,7 @@ exports.requestOtp = async (req, res) => {
     };
     try {
       await transporter.sendMail(mailOptions);
+      res.status(200).json({message: "Opt send Successfully!"})
     } catch (error) {
       console.error("Error sending OTP:", error);
       res.status(500).json({ error: error.message });
