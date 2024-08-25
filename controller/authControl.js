@@ -117,7 +117,7 @@ exports.requestOtp = async (req, res) => {
     };
     try {
       await transporter.sendMail(mailOptions);
-      res.status(200).json({message: "Opt send Successfully!"})
+      res.status(200).json({ message: "Opt send Successfully!" })
     } catch (error) {
       console.error("Error sending OTP:", error);
       res.status(500).json({ error: error.message });
@@ -135,10 +135,17 @@ exports.requestOtp = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   const { email, otp, newPassword } = req.body;
 
-  if (!email || !otp || !newPassword) {
-    return res
-      .status(400)
-      .json({ message: "Email, OTP, and new password are required" });
+  if (!email) {
+    res.status(400)
+      .json({ message: "Email is required!" });
+  }
+  if (!opt) {
+    res.status(400)
+      .json({ message: "OPT is required!" });
+  }
+  if (!newPassword) {
+    res.status(400)
+      .json({ message: "Password is required!" });
   }
   try {
     const user = await User.findOne({ email: email });
