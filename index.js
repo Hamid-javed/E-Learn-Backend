@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(express.json())
 
 
-app.use("/auth", userRouter)
+app.use("/auth", cors(corsOptions), userRouter);
 app.use("/courses", courseRouter)
 app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)
