@@ -17,6 +17,7 @@ const corsOptions = {
   origin: true, // Replace with your frontend's origin
   methods: 'GET,POST,DELETE,PUT',
   credentials: true, // Allow credentials (cookies) to be sent
+  optionsSuccessStatus: 204
 };
 app.use(cors(corsOptions));
 
