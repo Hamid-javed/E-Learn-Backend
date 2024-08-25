@@ -138,14 +138,14 @@ exports.resetPassword = async (req, res) => {
   if (!email || !otp || !newPassword) {
     return res
       .status(400)
-      .json({ error: "Email, OTP, and new password are required" });
+      .json({ message: "Email, OTP, and new password are required" });
   }
   try {
     const user = await User.findOne({ email: email });
     if (!user) return res.status(404).json({ error: "User not found" });
 
     if (user.otp.otp !== otp || user.expireDate < Date.now()) {
-      return res.status(400).json({ error: "Invalid or expired OTP" });
+      return res.status(400).json({ message: "Invalid or expired OTP" });
     }
     const hasdNewPassword = await bcrypt.hash(newPassword, 10);
     user.password = hasdNewPassword;
