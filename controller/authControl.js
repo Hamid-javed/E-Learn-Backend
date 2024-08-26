@@ -51,7 +51,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
       path: '/',
       sameSite: 'None',
-      maxAge: 60 * 60 * 1000,
+      // maxAge: 60 * 60 * 1000,
       secure: true
     });
     res.status(200).json({
