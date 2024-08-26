@@ -128,7 +128,7 @@ exports.requestOtp = async (req, res) => {
   user.otp.expireDate = otpExpires;
   await user.save();
   await sendOtpEmail(email, otp);
-  res.status(200).json({ message: "OTP sent to your email" });
+  // res.status(200).json({ message: "OTP sent to your email" });
 };
 
 // request change otp
