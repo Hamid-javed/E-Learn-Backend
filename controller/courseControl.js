@@ -270,7 +270,7 @@ exports.addSaved = async (req, res) => {
     user.savedCourses.push(courseId);
     const savedUser = await user.save();
     res.status(200).json({
-      Message: "Course added successfully!",
+      message: "Course added successfully!",
     });
   } catch (error) {
     res.status(500).json({

@@ -1904,6 +1904,7 @@ const lessons = [
 ];
 
 const courses = require("./courses");
+const { getRandomValues } = require("crypto");
 
 function genRandom(lowLimit, highLimit) {
   return Math.floor(Math.random() * highLimit + lowLimit);
@@ -1968,7 +1969,7 @@ const seedMentors = async () => {
         return {
           title: less.title,
           desc: less.desc,
-          img: less.img,
+          img: thumbnails[genRandom(0, thumbnails.length)],
           duration: less.duration,
           video: video
         }
@@ -2112,7 +2113,7 @@ const seedMentors = async () => {
         }
       });
     });
-    // await User.deleteMany({});
+    await User.deleteMany({});
     const flatCourseId = courseId.flat();
 
     for (let i = 0; i < 30; i++) {

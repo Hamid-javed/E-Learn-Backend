@@ -4,17 +4,17 @@ const { verifyUserToken } = require("../middleware/authUser");
 
 
 // To get a mentors all data
-router.get("/:mentorId/data",verifyUserToken,  mentorControl.getMentor);
+router.get("/data/:mentorId",verifyUserToken,  mentorControl.getMentor);
 // To get mentors about
-router.get("/:mentorId/about", verifyUserToken, mentorControl.getMentorAbout);
+router.get("/about/:mentorId", verifyUserToken, mentorControl.getMentorAbout);
 // To get all courses of a mentor
-router.get("/:mentorId/courses", verifyUserToken, mentorControl.getMentorCours);
+router.get("/courses/:mentorId", verifyUserToken, mentorControl.getMentorCours);
 // To all reviews of a mentor
-router.get("/:mentorId/reviews",verifyUserToken, mentorControl.getMentorReviews);
+router.get("/reviews/:mentorId",verifyUserToken, mentorControl.getMentorReviews);
 // To to add a review to a mentor
-router.post("/:mentorId/reviews", verifyUserToken, mentorControl.addMentorReviews);
+router.post("/reviews/:mentorId", verifyUserToken, mentorControl.addMentorReviews);
 // To allow a user to delete their review
-router.delete("/:mentorId/reviews", verifyUserToken, mentorControl.delMentorReviews);
+router.delete("/reviews/:mentorId", verifyUserToken, mentorControl.delMentorReviews);
 
 
 module.exports = router;
