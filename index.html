@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+
+    <script>
+        const data = {name: "arbab", email: "ali@gmail.com", passwrod: "123"}
+        const url = "https://elearningportal-56538109f664.herokuapp.com"
+        const options = {
+            method: "POST",
+            Headers: { "Content-type": "application/json"},
+            Credentials: "include",
+            body: JSON.stringify(data)
+        }
+        const fetchData = async () => {
+            const res = await fetch(`${url}/auth/register`, options)
+            const resJson = await res.json()
+            console.log(res)
+            console.log(resJson)
+
+        }
+        fetchData()
+        </script>
+</body>
+
+</html>
