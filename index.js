@@ -12,17 +12,6 @@ const cors = require('cors');
 const port = process.env.PORT
 
 
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     callback(null, true); // Allow all origins
-//   },
-//   methods: 'GET,POST,DELETE,PUT',
-//   credentials: true, // Allow credentials (cookies) to be sent
-//   optionsSuccessStatus: 204
-// };
-
-// CORS configuration
 const corsOptions = {
   origin: true, // Replace with your frontend's origin
   methods: 'GET,POST,DELETE,PUT',
