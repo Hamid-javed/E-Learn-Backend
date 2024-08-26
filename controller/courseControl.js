@@ -130,7 +130,7 @@ exports.search = async (req, res) => {
     const totalCount = await Course.countDocuments(searchCriteria);
 
     const coursesToSend = courses.map((course) => {
-      return { id: course._id, data: course.data.details };
+      return { id: course._id, data: course.data };
     });
 
     res.status(200).json({
