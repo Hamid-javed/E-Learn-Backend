@@ -128,7 +128,6 @@ exports.requestOtp = async (req, res) => {
   user.otp.expireDate = otpExpires;
   await user.save();
   await sendOtpEmail(email, otp);
-  res.status(200).json({ message: "OTP sent to your email" });
 };
 
 // request change otp
@@ -149,7 +148,7 @@ exports.resetPassword = async (req, res) => {
     const user = await User.findOne({ email: email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    if (user.otp !== otp || user.expireDate < Date.now()) {
+    if (user.otp.otp !== Number(otp) || user.otp.expireDate < Date.now()) {      
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
