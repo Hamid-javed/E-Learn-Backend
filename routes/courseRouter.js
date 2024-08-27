@@ -23,9 +23,9 @@ router.delete("/saved/:courseId", verifyUserToken, courseControl.deleteSaved)
 // To get all bought courses of a user
 router.get("/bought-courses", verifyUserToken, courseControl.getBoughtCourse)
 // To add a course to bought courses
-router.post("/:courseId/bought-courses", verifyUserToken, courseControl.buyCourse)
+router.post("/bought-courses/:courseId", verifyUserToken, courseControl.buyCourse)
 // To delete a course from bought users
-router.delete("/:courseId/bought-courses", verifyUserToken, courseControl.deleteBoughtCourse)
+router.delete("/bought-courses/:courseId", verifyUserToken, courseControl.deleteBoughtCourse)
 // To get all reviews of course
 router.get('/reviews/:courseId', verifyUserToken, courseControl.getReviews)
 // To add review to a course
