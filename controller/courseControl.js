@@ -358,7 +358,7 @@ exports.getBoughtCourse = async (req, res) => {
       const progress = `${(done / total) * 100}%`
 
       return {
-        _id: course._id,
+        id: course._id,
         data: course.data,
         completed: `${done}/${total}`,
         progress: progress,
