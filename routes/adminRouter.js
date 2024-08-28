@@ -5,7 +5,7 @@ const { verifyAdminToken } = require('../middleware/authAdmin')
 const router = require('express').Router()
 
 // To login admin
-router.post("/login",verifyAdminToken, adminControl.Login)
+router.post("/login", adminControl.Login)
 // To get single mentor by id
 router.get("/mentors/:mentorId/get", verifyAdminToken, mentorControl.getMentor)
 // to get all mentors
