@@ -524,7 +524,7 @@ exports.checkSaved = async (req, res) => {
     }
     const isSaved = user.savedCourses.includes(courseId)
     if (!isSaved) {
-      return res.status(404).json({ message: "Course is not saved!" })
+      return res.status(201).json({ message: "Course is not saved!" })
     }
     res.status(200).json({ message: "Course is already saved!" })
   } catch (error) {
@@ -542,7 +542,7 @@ exports.checkBought = async (req, res) => {
     }
     const isBought = user.boughtCourses.includes(courseId)
     if (!isBought) {
-      return res.status(404).json({ message: "Course is not Bought!" })
+      return res.status(201).json({ message: "Course is not Bought!" })
     }
     res.status(200).json({ message: "Course is already Bought!" })
   } catch (error) {
