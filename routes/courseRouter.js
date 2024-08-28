@@ -18,10 +18,14 @@ router.get("/search/categories", verifyUserToken, courseControl.searchCategory);
 router.get("/saved", verifyUserToken, courseControl.getSavedCourse)
 // To add a course to saved courses
 router.post("/saved/:courseId", verifyUserToken, courseControl.addSaved)
+// To check saved courses
+router.post("/checksaved/:courseId", verifyUserToken, courseControl.checkSaved)
 // To delete a course from saved courses 
 router.delete("/saved/:courseId", verifyUserToken, courseControl.deleteSaved)
 // To get all bought courses of a user
 router.get("/bought-courses", verifyUserToken, courseControl.getBoughtCourse)
+// To check bought courses
+router.get("/checkbought/:courseId", verifyUserToken, courseControl.checkBought)
 // To add a course to bought courses
 router.post("/bought-courses/:courseId", verifyUserToken, courseControl.buyCourse)
 // To delete a course from bought users

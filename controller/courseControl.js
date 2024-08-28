@@ -514,6 +514,41 @@ exports.getVideo = async (req, res) => {
   }
 }
 
+exports.checkSaved = async (req, res) => {
+  try {
+    const userId = req.id;
+    const { courseId } = req.params;
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(404).json({ message: "Unauthorized user" })
+    }
+    const isSaved = user.savedCourses.includes(courseId)
+    if (!isSaved) {
+      return res.status(404).json({ message: "Course is not saved!" })
+    }
+    res.status(200).json({ message: "Course is already saved!" })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+exports.checkBought = async (req, res) => {
+  try {
+    const userId = req.id;
+    const { courseId } = req.params;
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(404).json({ message: "Unauthorized user" })
+    }
+    const isBought = user.boughtCourses.includes(courseId)
+    if (!isBought) {
+      return res.status(404).json({ message: "Course is not Bought!" })
+    }
+    res.status(200).json({ message: "Course is already Bought!" })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
 
 
 
