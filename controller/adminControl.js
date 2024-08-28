@@ -20,10 +20,10 @@ exports.Login = async (req, res) => {
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
       httpOnly: true,
-      path: '/',
+      // path: '/',
       // sameSite: 'None',
       // maxAge: 60 * 60 * 1000,
-      secure: true
+      // secure: true
     });
     res.status(200).send({
       message: "Admin successfully logged in",
