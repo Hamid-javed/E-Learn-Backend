@@ -415,7 +415,7 @@ exports.addReview = async (req, res) => {
     const newReview = { rating: rating, review: review, user: userId }
     course.data.reviews.push(newReview)
     const x = await course.save()
-    res.status(201).json({ message: "review added" })
+    res.status(200).json({ message: "review added" })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
