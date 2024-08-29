@@ -559,7 +559,7 @@ exports.verifyReview = async (req, res) => {
     const course = await Course.findOne({ _id: courseId })
     if (!course) return res.status(404).json({ message: "course not found" })
     const review = course.data.reviews.filter((review) => review._id === reviewId)
-    if (review.length < 1) return res.status(404).json({ message: "review not found" })
+    if (review.length < 1) return res.status(404).json({ review, reviewId })
     const isOwner = review[0].user.equals(userId)
    
     if(isOwner) return res.status(200).json({ message: "is owner" })
