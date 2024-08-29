@@ -908,11 +908,6 @@ exports.signOut = async (req, res) => {
     if (!cookie) {
       return res.status(401).json({ message: "No token provided" });
     }
-    jwt.verify(cookie, SECRET_TOKEN, (err, decoded) => {
-      if (err) {
-        return res.status(403).json({ message: "Invalid token" });
-      }
-      // Clear the token cookie
       res.clearCookie("admintoken", {
         httpOnly: true,
         path: '/',
@@ -920,7 +915,6 @@ exports.signOut = async (req, res) => {
         secure: true
       });
       return res.status(200).json({ message: "User Sign out successfully" });
-    });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
