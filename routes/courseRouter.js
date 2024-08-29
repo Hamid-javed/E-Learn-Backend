@@ -43,6 +43,8 @@ router.post('/:courseId/lessonId/:lessonId/markdone', verifyUserToken, courseCon
 // To mark a lesson as undone
 router.delete('/:courseId/lessonId/:lessonId/markdone', verifyUserToken, courseControl.markUnDone)
 // To get a lesson video
+router.get('/:courseId/video/:videoId', verifyUserToken, courseControl.getVideo)
+// To verify review
 router.get('/:courseId/review/:reviewId', verifyUserToken, courseControl.verifyReview)
 
 
