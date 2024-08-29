@@ -243,7 +243,7 @@ exports.getSavedCourse = async (req, res) => {
     if (courses.length < 1) return res.status(404).json({ message: "no saved courses" })
     const coursesToSend = courses.map((course) => {
       return {
-        _id: course._id,
+        id: course._id,
         data: course.data,
       };
     });
@@ -298,7 +298,7 @@ exports.deleteSaved = async (req, res) => {
     });
   } catch (error) {
     res.status(408).json({
-      error: error,
+      error: error.message,
     });
   }
 };

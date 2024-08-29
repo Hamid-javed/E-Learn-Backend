@@ -18,7 +18,7 @@ exports.Login = async (req, res) => {
     if (!IsMatch) return res.status(401).json({ message: "Wrong password!" });
     let payload = { id: admin._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
-    res.cookie("token", token, {
+    res.cookie("admintoken", token, {
       httpOnly: true,
       path: '/',
       sameSite: 'None',
