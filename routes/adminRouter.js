@@ -74,6 +74,8 @@ router.get("/categories/get",verifyAdminToken,  adminControl.getCategories)
 router.delete("/categories/del/:categoryId",verifyAdminToken,  adminControl.delCategories)
 router.post("/categories/add",verifyAdminToken,  adminControl.addCategories)
 router.get("/categories",verifyAdminToken, courseControl.catagories);
+router.get("/signout",verifyAdminToken, adminControl.signOut);
+
 
 
 

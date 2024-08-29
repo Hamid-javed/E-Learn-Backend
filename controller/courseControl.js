@@ -551,5 +551,25 @@ exports.checkBought = async (req, res) => {
 }
 
 
+exports.verifyReview = async (req, res) => {
+  try {
+    const userId = req.id
+    const { courseId, reviewId } = req.params
+    if (!courseId) return res.status(400).json({ message: "please send course Id" })
+    const course = await Course.findOne({ _id: courseId })
+    if (!course) return res.status(404).json({ message: "course not found" })
+    const review = course.data.reviews.filter((review) => review._id === reviewId)
+    if (!review[0]) return res.status(404).json({ message: "review not found" })
+    const isOwner = review[0].user.equals(userId)
+   
+    if(isOwner) return res.status(200).json({ message: "is owner" })
+    res.status(400).json({ message: "is not owner" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+
+  }
+}
+
+
 
 
