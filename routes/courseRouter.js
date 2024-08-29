@@ -44,7 +44,7 @@ router.post('/:courseId/lessonId/:lessonId/markdone', verifyUserToken, courseCon
 router.delete('/:courseId/lessonId/:lessonId/markdone', verifyUserToken, courseControl.markUnDone)
 // To get a lesson video
 
-router.delete('/reviews/:courseId/reveiw/:reviewId', verifyUserToken, courseControl.verifyReview)
+router.delete('/:courseId/review/:reviewId', verifyUserToken, courseControl.verifyReview)
 
 
 
