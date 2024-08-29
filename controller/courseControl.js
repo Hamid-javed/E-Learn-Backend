@@ -145,7 +145,7 @@ exports.search = async (req, res) => {
   }
 };
 
-// serach/category?
+// serach/category?category=web dev&query=
 exports.searchCategory = async (req, res) => {
   try {
     const {
