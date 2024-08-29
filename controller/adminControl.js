@@ -904,7 +904,7 @@ exports.addCategories = async (req, res) => {
 
 exports.signOut = async (req, res) => {
   try {
-    const cookie = req.cookies.token;
+    const cookie = req.cookies.admintoken;
     if (!cookie) {
       return res.status(401).json({ message: "No token provided" });
     }
