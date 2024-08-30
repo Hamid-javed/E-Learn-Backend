@@ -2,6 +2,7 @@ const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const utils = require("../utils/utils");
+const Comment = require("../models/commentSchema")
 const nodemailer = require("nodemailer");
 const { SECRET_TOKEN } = require("../config/crypto");
 const { OAuth2Client } = require("google-auth-library");
@@ -318,6 +319,36 @@ exports.userData = async (req, res) => {
   }
 };
 
+
+
+exports.postComment = async (req, res) => {
+  try {
+    const userId = req.id; 
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized user 123" });
+    }
+    const { name, email, comment } = req.body;
+    if (!name || !email || !comment) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Create a new comment document
+    const newComment = new Comment({
+      name,
+      email,
+      comment,
+    });
+    await newComment.save();
+
+    res.status(200).json({
+      message: "Comment added successfully",
+      comment: newComment,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while posting the comment" });
+  }
+};
 
 
 exports.check = async (req, res) => {

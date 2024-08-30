@@ -25,8 +25,7 @@ router.delete("/delete", verifyUserToken, authControll.deleteUser);
 router.get("/user-details", verifyUserToken, authControll.userData)
 // to check
 router.get("/check", verifyUserToken,  authControll.check)
-
-
-
+// ato add a comment
+router.post("/comment", verifyUserToken,  authControll.postComment)
 
 module.exports = router;
