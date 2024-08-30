@@ -5,7 +5,7 @@ const { verifyAdminToken } = require('../middleware/authAdmin')
 const router = require('express').Router()
 
 // To login admin
-router.post("/login",verifyAdminToken, adminControl.Login)
+router.post("/login", adminControl.Login)
 // To get single mentor by id
 router.get("/mentors/:mentorId/get", verifyAdminToken, mentorControl.getMentor)
 // to get all mentors
@@ -61,7 +61,7 @@ router.post("/videos/add-video",verifyAdminToken,  adminControl.addVideo)
 router.delete("/videos/:videoId",verifyAdminToken,  adminControl.delVideo)
 router.patch("/videos/:videoId", verifyAdminToken, adminControl.updVideo)
 router.get("/get/admins",verifyAdminToken,  adminControl.getAdmins)
-router.post("/admin/add",verifyAdminToken,  adminControl.addAdmin)
+router.post("/admin/add",  adminControl.addAdmin)
 router.delete("/admin/del/:adminId", verifyAdminToken, adminControl.delAdmin)
 router.delete("/admin/change-password",verifyAdminToken,  adminControl.changePass)
 router.get("/charts/biaxial",verifyAdminToken,  adminControl.getBiaxialData)
@@ -74,6 +74,8 @@ router.get("/categories/get",verifyAdminToken,  adminControl.getCategories)
 router.delete("/categories/del/:categoryId",verifyAdminToken,  adminControl.delCategories)
 router.post("/categories/add",verifyAdminToken,  adminControl.addCategories)
 router.get("/categories",verifyAdminToken, courseControl.catagories);
+router.get("/signout",verifyAdminToken, adminControl.signOut);
+
 
 
 

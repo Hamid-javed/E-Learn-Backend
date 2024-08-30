@@ -5,7 +5,7 @@ const { SECRET_TOKEN } = require("../config/crypto")
 exports.verifyAdminToken = async (req, res, next) => {
 
     try {
-        const cookie = req.cookies.token;
+        const cookie = req.cookies.admintoken;
         if (!cookie) {
             return res.status(401).json({
                 message: "Unauthorized Admin!"

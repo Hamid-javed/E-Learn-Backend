@@ -145,7 +145,7 @@ exports.search = async (req, res) => {
   }
 };
 
-// serach/category?
+// serach/category?category=web dev&query=
 exports.searchCategory = async (req, res) => {
   try {
     const {
@@ -243,7 +243,7 @@ exports.getSavedCourse = async (req, res) => {
     if (courses.length < 1) return res.status(404).json({ message: "no saved courses" })
     const coursesToSend = courses.map((course) => {
       return {
-        _id: course._id,
+        id: course._id,
         data: course.data,
       };
     });
@@ -298,7 +298,7 @@ exports.deleteSaved = async (req, res) => {
     });
   } catch (error) {
     res.status(408).json({
-      error: error,
+      error: error.message,
     });
   }
 };
@@ -415,7 +415,7 @@ exports.addReview = async (req, res) => {
     const newReview = { rating: rating, review: review, user: userId }
     course.data.reviews.push(newReview)
     const x = await course.save()
-    res.status(201).json({ message: "review added" })
+    res.status(200).json({ message: "review added" })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -547,6 +547,26 @@ exports.checkBought = async (req, res) => {
     res.status(200).json({ message: "Course is already Bought!" })
   } catch (error) {
     res.status(500).json({ error: error.message })
+  }
+}
+
+
+exports.verifyReview = async (req, res) => {
+  try {
+    const userId = req.id
+    const { courseId, reviewId } = req.params
+    if (!courseId) return res.status(400).json({ message: "please send course Id" })
+    const course = await Course.findOne({ _id: courseId })
+    if (!course) return res.status(404).json({ message: "course not found" })
+    const review = course.data.reviews.filter((review) => review.equals(reviewId))
+    if (review.length < 1) return res.status(404).json({ review, reviewId })
+    const isOwner = review[0].user.equals(userId)
+   
+    if(isOwner) return res.status(200).json({ message: "is owner" })
+    res.status(400).json({ message: "is not owner" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+
   }
 }
 
