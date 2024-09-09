@@ -19,12 +19,13 @@ exports.Login = async (req, res) => {
     let payload = { id: admin._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("admintoken", token, {
-      httpOnly: true,
-      path: '/',
-      sameSite: 'None',
-      // maxAge: 60 * 60 * 1000,
-      secure: true
+      httpOnly: true,      // Cookie JavaScript se accessible nahi hogi (server-side only)
+      path: '/',           // Entire domain ke liye accessible hogi
+      sameSite: 'None',    // Cross-origin requests allow karega (zaroori hai agar frontend/backend alag domains pe hain)
+      secure: false        // HTTP requests pe bhi cookie send hogi (HTTPS ki zaroorat nahi)
+      // maxAge: 60 * 60 * 1000  // Optional: Cookie expiration time (1 hour in milliseconds)
     });
+    
     res.status(200).send({
       message: "Admin successfully logged in",
     });
