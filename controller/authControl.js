@@ -48,7 +48,6 @@ exports.login = async (req, res) => {
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
-      httpOnly: true,
       path: '/',
       sameSite: 'None',
       // maxAge: 60 * 60 * 1000,
@@ -128,7 +127,6 @@ exports.requestOtp = async (req, res) => {
   user.otp.expireDate = otpExpires;
   await user.save();
   await sendOtpEmail(email, otp);
-  // res.status(200).json({ message: "OTP sent to your email" });
 };
 
 // request change otp
