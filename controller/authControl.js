@@ -49,9 +49,10 @@ exports.login = async (req, res) => {
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
+      httpOnly:true,
       path: '/',
       sameSite: 'None',
-      // maxAge: 60 * 60 * 1000,
+      maxAge: 60 * 60 * 1000, // Optional: 1 hour expiration
       secure: true
     });
     res.status(200).json({
