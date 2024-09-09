@@ -9,26 +9,42 @@ const adminRouter = require("./routes/adminRouter")
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const port = process.env.port
+const port = process.env.PORT
 
+
+const corsOptions = {
+  origin: true, // Replace with your frontend's origin
+  methods: 'GET,POST,DELETE,PUT,PATCH',
+  credentials: true, // Allow credentials (cookies) to be sent
+  optionsSuccessStatus: 204
+};
+app.use(cors(corsOptions));
+
+
+
+
+app.options('*', cors(corsOptions));
 app.use(cookieParser());
-app.use(cors());
 app.use(express.json())
 
 
-app.use("/auth", userRouter)
+app.use("/auth", userRouter);
 app.use("/courses", courseRouter)
 app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)
+app.get("/", (req, res) => res.send("hello"))
 
 
 mongoose.connect(
-  "mongodb://localhost:27017/E-learning"
+  process.env.DB_URL
 )
   .then(() => {
-    console.log("Connected To MongoDB"),
-      app.listen(port, () => {
-        console.log("Server running on localhost:" + port);
-      });
+    console.log("Connected To MongoDB")
   })
-  .catch((err) => console.log(`unable to connet with dB : ${err.stack} `));
+  .catch((err) => {
+    console.log(err.stack)
+
+  })
+app.listen(port, () => {
+  console.log("Server running on localhost:" + port);
+});

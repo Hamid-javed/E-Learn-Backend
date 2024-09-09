@@ -14,7 +14,7 @@ const mentorSchema = new mongoose.Schema({
     },
   ],
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-  numOFReviews: { type: Number },
+  numOfReviews: { type: Number },
   numOfCourses: { type: Number },
   socialMedia: [
     {
@@ -29,7 +29,7 @@ mentorSchema.pre("save", function (next) {
   const courseNum = this.courses.length;
 
   this.numOfCourses = courseNum;
-  this.numOFReviews = reviewNum;
+  this.numOfReviews = reviewNum;
 
   next();
 });
