@@ -13,7 +13,7 @@ const port = process.env.PORT
 
 
 const corsOptions = {
-  origin: true, // Replace with your frontend's origin
+  origin: true,
   methods: 'GET,POST,DELETE,PUT,PATCH',
   credentials: true, // Allow credentials (cookies) to be sent
   optionsSuccessStatus: 204
