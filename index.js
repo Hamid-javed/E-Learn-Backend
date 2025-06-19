@@ -34,7 +34,6 @@ app.use("/mentors", mentorRouter)
 app.use("/admin", adminRouter)
 app.get("/", (req, res) => res.send("hello"))
 
-
 mongoose.connect(
   process.env.DB_UR
 )
