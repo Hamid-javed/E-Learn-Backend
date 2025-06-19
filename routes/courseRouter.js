@@ -4,14 +4,14 @@ const { verifyUserToken } = require('../middleware/authUser');
 
 // To get featured courses
 router.get("/featured", verifyUserToken, courseControl.featured),
-// TO get a course by Id
-router.get("/get/:id",verifyUserToken, courseControl.searchByID),
-// To get a course by Id (short details)
-router.get("/get/details/:id",verifyUserToken, courseControl.searchByIDdetails),
-// To get all categories
-router.get("/categories", verifyUserToken, courseControl.catagories);
+    // TO get a course by Id
+    router.get("/get/:id", verifyUserToken, courseControl.searchByID),
+    // To get a course by Id (short details)
+    router.get("/get/details/:id", verifyUserToken, courseControl.searchByIDdetails),
+    // To get all categories
+    router.get("/categories", verifyUserToken, courseControl.catagories);
 // To search courses (query, categories, page, limit, sortOrder, sortField)
-router.get("/search", verifyUserToken, courseControl.search);
+router.get("/search", courseControl.search);
 // To get courses in specific categories and search (query, categories, page, limit, sortOrder, sortField)
 router.get("/search/categories", verifyUserToken, courseControl.searchCategory);
 // To get saved courses of a user

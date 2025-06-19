@@ -36,7 +36,7 @@ app.get("/", (req, res) => res.send("hello"))
 
 
 mongoose.connect(
-  process.env.DB_URL
+  process.env.DB_UR
 )
   .then(() => {
     console.log("Connected To MongoDB")

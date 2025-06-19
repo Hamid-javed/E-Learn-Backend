@@ -49,10 +49,10 @@ exports.login = async (req, res) => {
     let payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_TOKEN);
     res.cookie("token", token, {
-      httpOnly:true,
+      httpOnly: true,
       path: '/',
       sameSite: 'None',
-      maxAge: 60 * 60 * 1000, // Optional: 1 hour expiration
+      // maxAge: 60 * 60 * 1000, // Optional: 1 hour expiration
       secure: true
     });
     res.status(200).json({
@@ -322,7 +322,7 @@ exports.userData = async (req, res) => {
 
 exports.postComment = async (req, res) => {
   try {
-    const userId = req.id; 
+    const userId = req.id;
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized user 123" });
     }

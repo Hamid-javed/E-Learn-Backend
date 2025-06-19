@@ -313,8 +313,8 @@ exports.buyCourse = async (req, res) => {
     if (!courseId) {
       return res.status(400).json("Course id not found!");
     }
-    const { cardNumber, cardName, ExData, CVV } = req.body;
-    if (!cardNumber || !cardName || !ExData || !CVV) {
+    const { cardNumber, cardName, expiryDate, CVV } = req.body;
+    if (!cardNumber || !cardName || !expiryDate || !CVV) {
       return res.status(400).json({
         message: "Fill all details please!",
       });
@@ -326,8 +326,8 @@ exports.buyCourse = async (req, res) => {
     if (user.boughtCourses.includes(courseId)) return res.status(400).json({ message: "course already bought" })
     user.boughtCourses.push(courseId);
     course.students.push(userId)
-    const BoughtCourse = await user.save();
-    const StudentCourse = await course.save();
+    await user.save();
+    await course.save();
     res.status(200).json({
       message: "Buy Course successfully!",
     });
@@ -561,8 +561,8 @@ exports.verifyReview = async (req, res) => {
     const review = course.data.reviews.filter((review) => review.equals(reviewId))
     if (review.length < 1) return res.status(404).json({ review, reviewId })
     const isOwner = review[0].user.equals(userId)
-   
-    if(isOwner) return res.status(200).json({ message: "is owner" })
+
+    if (isOwner) return res.status(200).json({ message: "is owner" })
     res.status(400).json({ message: "is not owner" })
   } catch (error) {
     res.status(500).json({ message: error.message })
