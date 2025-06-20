@@ -25,7 +25,7 @@ jobs:
       - name: Deploy via SSH
         run: |
           ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd ~/node-app
+            cd ~/E-Learn-Backend
             git pull origin main
             npm install
             pm2 restart app || pm2 start index.js --name "app"
