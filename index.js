@@ -84,7 +84,7 @@ app.use("/admin", adminRouter);
 app.get("/", (req, res) => res.send("hello"));
 
 mongoose
-  .connect(process.env.DB_UR)
+  .connect("mongodb+srv://node-deploy:hamid123@node-deploy.gmwxivm.mongodb.net/?retryWrites=true&w=majority&appName=node-deploy")
   .then(() => {
     console.log("Connected To MongoDB");
   })

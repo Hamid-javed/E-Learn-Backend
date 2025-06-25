@@ -3,7 +3,7 @@ const courseControl = require("../controller/courseControl");
 const { verifyUserToken } = require('../middleware/authUser');
 
 // To get featured courses
-router.get("/featured", verifyUserToken, courseControl.featured),
+router.get("/featured", courseControl.featured),
     // TO get a course by Id
     router.get("/get/:id", verifyUserToken, courseControl.searchByID),
     // To get a course by Id (short details)
