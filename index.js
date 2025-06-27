@@ -63,7 +63,7 @@ const cors = require("cors");
 const port = process.env.PORT;
 
 const corsOptions = {
-  origin: '*', // or use an array if needed
+  origin: 'https://elearnportal.netlify.app',
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
   credentials: true,
   optionsSuccessStatus: 204,
